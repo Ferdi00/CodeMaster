@@ -1,10 +1,12 @@
 .navbar{
+	display: flex;
+	justify-content: space-between;
 	width: 100%;
 	background-color: rgb(40,40,40);
-	color: rgb(179,179,179);
+	color: #b3b3b3;
 	margin-top: 0;
-	height: 55px;
-	flex-shrink: 0;
+	height: 60px;
+
 }
 
 .logo{
@@ -12,3 +14,26 @@
 	left: 10px;
 	top:10px;
 }
+
+.signBut{
+	text-align: center;
+	color: white;
+	font-size: 1.2rem;
+	text-decoration: none;
+	cursor: pointer;
+	border: none;
+	height: 2.2rem;
+	position: relative;
+	right: 3rem;
+	top: 25%;
+	width: 6rem;
+	background-color: #ff9900;
+	border-radius: 10px;
+	box-shadow: 0px 0px 6px  #ff9900;
+}
+
+.signBut:hover{
+	background-color: white;
+	color: #ff9900 ;
+}
+

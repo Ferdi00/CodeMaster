@@ -4,6 +4,8 @@ import Navbar from "./Components/Navbar";
 import Left from "./Components/Left";
 import Right from "./Components/Right";
 import Footer from "./Components/Footer";
+import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,7 +32,8 @@ function App() {
       >	
 			</Route>
 
-      <Route path="login" element={<h1>pagina login</h1>}></Route>
+      <Route path="login" element={<Login />}></Route>
+      <Route path="signup" element={<Signup />}></Route>
 
 			
     </Routes>

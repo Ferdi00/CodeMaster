@@ -7,9 +7,11 @@ const Navbar = () => {
 	return (
 		<div className="navbar">
 
-			<Link to="prova" className="logo" value><img src={logo} alt="logo"></img>
-			</Link>
+			<Link to="/" className="logo"><img src={logo} alt="logo"></img></Link>
 
+			<Link to="/login"><button className="signBut">Accedi</button></Link>
+			
+			
 		</div>
 	)
 }
