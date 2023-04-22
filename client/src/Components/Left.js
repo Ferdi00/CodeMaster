@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Styles/Left.css'
+import '../styles/Left.css'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import next from "../svg/next.svg";
@@ -11,11 +11,8 @@ const Left = () => {
   return (
     <div className=" left">
       <div className="status">
-        <div className="frecce centered">
-          <button><img alt="back" src={back}></img></button>
-          <button><img alt="next" src={next}></img></button> 
-        </div >
-        <div className="progress">
+          <button className='frecce'><img alt="back" src={back}></img></button>
+          <div className="progress">
           <label className="centered ">Completato:</label>
           <CircularProgressbar 
           value={percentage} 
@@ -60,6 +57,7 @@ const Left = () => {
           backgroundPadding={9}
           />
         </div>
+          <button className='frecce'><img alt="next" src={next}></img></button> 
       </div>
     <div className="text"> 
       <h1>Introduzione</h1>

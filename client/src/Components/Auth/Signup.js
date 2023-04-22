@@ -1,65 +1,161 @@
-import React from 'react'
-import '../../Styles/AuthPage.css';
+import { React, useEffect, useState } from "react";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {auth} from "../../firebase/firebase"
+import "../../styles/AuthPage.css";
 import Navbar from "../Navbar";
-import {Link} from 'react-router-dom'
+import {toast, ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { Link,useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
 
+
+const showErrorToast = (msg) => {
+    toast.error(msg || `Error`, {
+      position: "top-center",
+      autoClose: 1500,
+      theme: "dark",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
+
+
+
 const Signup = () => {
+
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password_confirm: "",
+  });
+
+  const handleChangeInput = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const navigate = useNavigate();
+    
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if(!inputs.email || !inputs.password || !inputs.username || !inputs.password_confirm) return showErrorToast("Per favore inserisci tutti i campi");
+      
+    else if(inputs.password !== inputs.password_confirm) return showErrorToast("Le password non corrispondono, per favore riprova");
+
+    else try{
+            const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
+            if(!newUser) return;
+
+            navigate("/");
+            
+        } catch (error) {
+            alert(error.message);
+        }
+  };
+
+  useEffect(() => {
+    if(error){
+        console.log(error.message);
+        //showErrorToast(error.message);
+    } 
+  }, [error])
+  
+
   return (
     <div>
-       <Navbar></Navbar>
-       <section className="auth-container forms">
-            <div className="form signup">
-                <div className="form-content">
-                    <header>Registrati</header>
-                    <form action="#">
-                    <div className="field input-field">
-                            <input type="username" placeholder="Username" className="input"/>
-                        </div>
-                        <div className="field input-field">
-                            <input type="email" placeholder="Email" className="input"/>
-                        </div>
+    <ToastContainer></ToastContainer>
+      <Navbar></Navbar>
+      <section className="auth-container forms">
+        <div className="form signup">
+          <div className="form-content">
+            <header>Registrati</header>
+            <form onSubmit={handleRegister}>
+              <div className="field input-field">
+                <input
+                  type="username"
+                  name="username"
+                  placeholder="Username"
+                  className="input"
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <div className="field input-field">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input"
+                  onChange={handleChangeInput}
+                />
+              </div>
 
-                        <div className="field input-field">
-                            <input type="password" placeholder="Crea password" className="password"/>
-                        </div>
+              <div className="field input-field">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Crea password"
+                  className="password"
+                  onChange={handleChangeInput}
+                />
+              </div>
 
-                        <div className="field input-field">
-                            <input type="password" placeholder="Conferma password" className="password"/>
-                            <i className='bx bx-hide eye-icon'></i>
-                        </div>
+              <div className="field input-field">
+                <input
+                  type="password"
+                  name="password_confirm"
+                  placeholder="Conferma password"
+                  className="password"
+                  onChange={handleChangeInput}
+                />
+                <i className="bx bx-hide eye-icon"></i>
+              </div>
 
-                        <div className="field button-field">
-                            <button>Registrati</button>
-                        </div>
-                    </form>
+              <div className="field button-field">
+                <button>Registrati</button>
+              </div>
+            </form>
 
-                    <div className="form-link">
-                        <span>Hai già un account? <Link to="/login" classNameName="link login-link">Login</Link></span>
-                    </div>
-                </div>
-
-                <div className="line"></div>
-
-                <div className="media-options">
-                    <a href="#" className="field facebook">
-                        <img src={fb_icon} alt="" className='bx bxl-facebook facebook-icon'></img>
-                        <span>Accedi con Facebook</span>
-                    </a>
-                </div>
-
-                <div className="media-options">
-                    <a href="#" className="field google">
-                        <img src={google_icon} alt="" className="google-img" />
-                        <span>Accedi con Google</span>
-                    </a>
-                </div>
-
+            <div className="form-link">
+              <span>
+                Hai già un account?{" "}
+                <Link to="/login" classNameName="link login-link">
+                  Login
+                </Link>
+              </span>
             </div>
-        </section>
-    </div>
-  )
-}
+          </div>
 
-export default Signup
+          <div className="line"></div>
+
+          <div className="media-options">
+            <a href="#" className="field facebook">
+              <img
+                src={fb_icon}
+                alt=""
+                className="bx bxl-facebook facebook-icon"
+              ></img>
+              <span>Accedi con Facebook</span>
+            </a>
+          </div>
+
+          <div className="media-options">
+            <a href="#" className="field google">
+              <img src={google_icon} alt="" className="google-img" />
+              <span>Accedi con Google</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Signup;

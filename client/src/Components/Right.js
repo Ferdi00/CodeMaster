@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "../Styles/Right.css";
+import "../styles/Right.css";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import spinner from "../svg/spinner.svg";

@@ -1,15 +1,20 @@
-import "./Styles/App.css";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Left from "./Components/Left";
-import Right from "./Components/Right";
-import Footer from "./Components/Footer";
-import Login from "./Components/Auth/Login";
-import Signup from "./Components/Auth/Signup";
+import "./styles/App.css";
+import { Routes, Route, useRoute } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Left from "./components/Left";
+import Right from "./components/Right";
+import Footer from "./components/Footer";
+import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/firebase";
 
 function App() {
+
+  const [user,loading,error] = useAuthState(auth);
+
   return (
     <Routes>
       <Route
