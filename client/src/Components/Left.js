@@ -4,14 +4,16 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import next from "../svg/next.svg";
 import back from "../svg/back.svg";
+import Text from "./pages/introduzione";
+import {Link} from 'react-router-dom'
+
 
 const percentage = 0;
-
 const Left = () => {
   return (
     <div className=" left">
       <div className="status">
-          <button className='frecce'><img alt="back" src={back}></img></button>
+         <button className='frecce'><img alt="back" src={back}></img></button>
           <div className="progress">
           <label className="centered ">Completato:</label>
           <CircularProgressbar 
@@ -47,7 +49,7 @@ const Left = () => {
               // Text color
               fill: 'white',
               // Text size
-              fontSize: '1.4rem',
+              fontSize: '1.6rem',
             },
             // Customize background - only used when the `background` prop is true
             background: {
@@ -57,33 +59,11 @@ const Left = () => {
           backgroundPadding={9}
           />
         </div>
-          <button className='frecce'><img alt="next" src={next}></img></button> 
+          <button className='frecce'> <Link to='/operatori_numerici'><img alt="next" src={next}></img></Link>
+          </button> 
       </div>
     <div className="text"> 
-      <h1>Introduzione</h1>
-      <h3 >Python è un linguaggio di programmazione moderno, dalla sintassi semplice e potente che ne facilita l’apprendimento. Gli ambiti di applicazione di questo linguaggio di programmazione sono svariati: sviluppo di siti o applicazioni Web e desktop, realizzazione di interfacce grafiche, amministrazione di sistema, calcolo scientifico e numerico, database, giochi, grafica 3D, eccetera.<br></br>
-      <br></br>
-      L’obiettivo di questa guida è quello di fornire una panoramica generale sulla programmazione in Python, che permetta al lettore di sviluppare in modo facile e veloce le proprie applicazioni.</h3>
-
-      <h3>Per il download e l'istallazione vai alla pagina: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></h3>
-      <h3 >Python è un linguaggio di programmazione moderno, dalla sintassi semplice e potente che ne facilita l’apprendimento. Gli ambiti di applicazione di questo linguaggio di programmazione sono svariati: sviluppo di siti o applicazioni Web e desktop, realizzazione di interfacce grafiche, amministrazione di sistema, calcolo scientifico e numerico, database, giochi, grafica 3D, eccetera.<br></br>
-            <br></br>
-      L’obiettivo di questa guida è quello di fornire una panoramica generale sulla programmazione in Python, che permetta al lettore di sviluppare in modo facile e veloce le proprie applicazioni.</h3>
-
-      <h3>Per il download e l'istallazione vai alla pagina: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></h3> <h3 >Python è un linguaggio di programmazione moderno, dalla sintassi semplice e potente che ne facilita l’apprendimento. Gli ambiti di applicazione di questo linguaggio di programmazione sono svariati: sviluppo di siti o applicazioni Web e desktop, realizzazione di interfacce grafiche, amministrazione di sistema, calcolo scientifico e numerico, database, giochi, grafica 3D, eccetera.<br></br>
-            <br></br>
-      L’obiettivo di questa guida è quello di fornire una panoramica generale sulla programmazione in Python, che permetta al lettore di sviluppare in modo facile e veloce le proprie applicazioni.</h3>
-
-      <h3>Per il download e l'istallazione vai alla pagina: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></h3> <h3 >Python è un linguaggio di programmazione moderno, dalla sintassi semplice e potente che ne facilita l’apprendimento. Gli ambiti di applicazione di questo linguaggio di programmazione sono svariati: sviluppo di siti o applicazioni Web e desktop, realizzazione di interfacce grafiche, amministrazione di sistema, calcolo scientifico e numerico, database, giochi, grafica 3D, eccetera.<br></br>
-            <br></br>
-      L’obiettivo di questa guida è quello di fornire una panoramica generale sulla programmazione in Python, che permetta al lettore di sviluppare in modo facile e veloce le proprie applicazioni.</h3>
-
-      <h3>Per il download e l'istallazione vai alla pagina: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></h3> <h3 >Python è un linguaggio di programmazione moderno, dalla sintassi semplice e potente che ne facilita l’apprendimento. Gli ambiti di applicazione di questo linguaggio di programmazione sono svariati: sviluppo di siti o applicazioni Web e desktop, realizzazione di interfacce grafiche, amministrazione di sistema, calcolo scientifico e numerico, database, giochi, grafica 3D, eccetera.<br></br>
-            <br></br>
-      L’obiettivo di questa guida è quello di fornire una panoramica generale sulla programmazione in Python, che permetta al lettore di sviluppare in modo facile e veloce le proprie applicazioni.</h3>
-
-      <h3>Per il download e l'istallazione vai alla pagina: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></h3>
-      
+    <Text/>
     </div>
     </div>
 )

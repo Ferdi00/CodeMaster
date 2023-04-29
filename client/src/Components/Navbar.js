@@ -5,6 +5,8 @@ import avatar from "../svg/avatar.png";
 import {Link} from 'react-router-dom'
 import {useAuthState ,useSignOut} from "react-firebase-hooks/auth"
 import { auth } from "../firebase/firebase";
+import coin from "../svg/dollar.png"
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const Navbar = () => {
 	const [user] = useAuthState(auth);
@@ -12,19 +14,39 @@ const Navbar = () => {
 
 	const handleLogout = () => {
 		signOut();
+		
 	};
 	
+	const exp = 100;
+	const lev = 2;
 
 	return (
 		<div className="navbar">
 
-			<Link to="/" className="logo"><img src={logo} alt="logo"></img></Link>
+			<Link to="/introduzione" className="logo"><img src={logo} alt="logo"></img></Link>
 
-			{!user &&
-			<Link to="/login"><button className="signBut">Accedi</button></Link>
+			{user &&	
+			<section className="middle centered">
+				<div centered>
+  			<h3>Liv:{lev}</h3><ProgressBar completed={exp} bgColor='#ea2b2b' height='22px' animateOnRender="true" labelAlignment="center" />
+				</div>
+				<img src={coin} alt="coin"/><h2>x0</h2> 
+				</section> 
 			}
+		
+
 			{user &&
-			<div className="user"><img src={avatar} alt="avatar"/><button onClick={handleLogout} className="logoutBut">Logout</button></div>
+			
+			
+			<div className="user">
+				<Link to="/profile"><img src={avatar} alt="avatar"/> </Link>
+				
+				<button onClick={handleLogout} className="logoutBut">Logout</button>
+			</div>
+			}
+
+		{!user &&
+			<Link to="/login"><button className="signBut">Accedi</button></Link>
 			}
 			
 			

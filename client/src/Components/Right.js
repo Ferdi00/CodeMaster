@@ -1,10 +1,9 @@
 import { useState } from "react";
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import "../styles/Right.css";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import spinner from "../svg/spinner.svg";
+import { showErrorToast, showWarningToast, showSuccessToast } from "./ToastCustom";
 
 function Right() {
   // State variable to set users source code
@@ -109,44 +108,6 @@ let checkStatus = async (token) => {
     showWarningToast()
   }
 };
-
-  const showSuccessToast = (msg) => {
-    toast.success(msg || `Success`, {
-      position: "top-center",
-      autoClose: 1500,
-      theme: "dark",
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-  const showErrorToast = (msg) => {
-    toast.error(msg || `Error`, {
-      position: "top-center",
-      autoClose: 1500,
-      theme: "dark",
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
-  const showWarningToast = (msg) => {
-    toast.warning(msg || `Something went wrong! Please try again.`, {
-      position: "top-center",
-      autoClose: 1500,
-      theme: "dark",
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
 
   function changeOutput(outputDetails) {
     const statusId = outputDetails.status.id;

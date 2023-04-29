@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(16,156,9);
+    background: #109c09;
     background: radial-gradient(circle, rgba(16,156,9,1) 2%, rgba(0,0,0,1) 67%);
     column-gap: 30px;
 }
@@ -123,6 +123,7 @@ form{
     padding: 0 15px;
 }
 .media-options a{
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;

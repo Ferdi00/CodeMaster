@@ -1,27 +1,14 @@
 import { React, useState, useEffect } from "react";
-import Navbar from "../Navbar";
 import "../../styles/AuthPage.css";
+import Navbar from "../Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useSignInWithEmailAndPassword, useSignInWithGoogle} from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
-import { toast, ToastContainer } from "react-toastify";
+import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const showErrorToast = (msg) => {
-  toast.error(msg || `Error`, {
-    position: "top-center",
-    autoClose: 1500,
-    theme: "dark",
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-};
-
+import {showErrorToast} from "../ToastCustom"
 
 const Login = () => {
 
@@ -38,6 +25,18 @@ const Login = () => {
   const handleChangeInput = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
+
+  const googleSignIn = async (e) => {
+    try {
+      const newUser = await signInWithGoogle();
+            if(!newUser) return;
+            navigate("/introduzione");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -93,7 +92,7 @@ const Login = () => {
               </div>
 
               <div className="form-link">
-                <a href="#" className="forgot-pass">
+                <a className="forgot-pass">
                   Password dimenticata?
                 </a>
               </div>
@@ -116,7 +115,7 @@ const Login = () => {
           <div className="line"></div>
 
           <div className="media-options">
-            <a href="#" className="field facebook">
+            <a  className="field facebook">
               <img
                 src={fb_icon}
                 alt=""
@@ -127,7 +126,7 @@ const Login = () => {
           </div>
 
           <div className="media-options">
-            <a href="#" className="field google">
+            <a onClick={googleSignIn} className="field google">
               <img src={google_icon} alt="" className="google-img" />
               <span>Accedi con Google</span>
             </a>

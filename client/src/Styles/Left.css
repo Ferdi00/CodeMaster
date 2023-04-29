@@ -13,10 +13,10 @@
 
 .text{
   box-sizing: border-box;
-  height: 85vh;
+  height: calc(90vh - 0px);
   text-align: left;
   padding: 10px;
-  font-size: 110%;
+  font-size: 100%;
   overflow: auto;
 }
 

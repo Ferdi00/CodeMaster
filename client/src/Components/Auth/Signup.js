@@ -1,30 +1,15 @@
 import { React, useEffect, useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle  } from "react-firebase-hooks/auth";
 import {auth} from "../../firebase/firebase"
 import "../../styles/AuthPage.css";
 import Navbar from "../Navbar";
-import {toast, ToastContainer} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
+import {showErrorToast} from "../ToastCustom"
 import "react-toastify/dist/ReactToastify.css";
 import { Link,useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
-
-
-const showErrorToast = (msg) => {
-    toast.error(msg || `Error`, {
-      position: "top-center",
-      autoClose: 1500,
-      theme: "dark",
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  };
-
-
-
+import { createUserDocument } from "../../Dao/UserDao";
 
 const Signup = () => {
 
@@ -41,9 +26,20 @@ const Signup = () => {
 
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-
   const navigate = useNavigate();
-    
+   const [signInWithGoogle] = useSignInWithGoogle(auth);
+
+  const googleSignIn = async (e) => {
+    try {
+      const newUser = await signInWithGoogle();
+            if(!newUser) return;
+            navigate("/introduzione");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   const handleRegister = async (e) => {
     e.preventDefault();
     if(!inputs.email || !inputs.password || !inputs.username || !inputs.password_confirm) return showErrorToast("Per favore inserisci tutti i campi");
@@ -53,8 +49,8 @@ const Signup = () => {
     else try{
             const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
             if(!newUser) return;
-
-            navigate("/");
+            createUserDocument(inputs,newUser.user.uid);
+            navigate("/introduzione");
             
         } catch (error) {
             alert(error.message);
@@ -134,9 +130,8 @@ const Signup = () => {
           </div>
 
           <div className="line"></div>
-
           <div className="media-options">
-            <a href="#" className="field facebook">
+            <a onClick={""} className="field facebook">
               <img
                 src={fb_icon}
                 alt=""
@@ -147,7 +142,7 @@ const Signup = () => {
           </div>
 
           <div className="media-options">
-            <a href="#" className="field google">
+            <a onClick={googleSignIn} className="field google">
               <img src={google_icon} alt="" className="google-img" />
               <span>Accedi con Google</span>
             </a>

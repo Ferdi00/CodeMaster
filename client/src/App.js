@@ -1,24 +1,19 @@
 import "./styles/App.css";
-import { Routes, Route, useRoute } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Left from "./components/Left";
 import Right from "./components/Right";
-import Footer from "./components/Footer";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
+import Profile from "./components/Auth/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase/firebase";
-
 function App() {
-
-  const [user,loading,error] = useAuthState(auth);
 
   return (
     <Routes>
       <Route
-        path="/"
+        path="/introduzione"
         element={
           <div className="App">
             <ToastContainer></ToastContainer>
@@ -39,7 +34,8 @@ function App() {
 
       <Route path="login" element={<Login />}></Route>
       <Route path="signup" element={<Signup />}></Route>
-
+      <Route path="profile" element={<Profile />}></Route>
+      
 			
     </Routes>
   );

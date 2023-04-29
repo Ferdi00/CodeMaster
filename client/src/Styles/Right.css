@@ -103,8 +103,10 @@ input[type=range]::-webkit-slider-runnable-track  {
 .container{
   margin-top: 5px;
   display: flex;
+  margin-bottom: 0;
   flex-direction: row;
-  height: 14rem;
+  height: calc(35vh - 47px );
+  overflow:auto;
 }
 
 .input{
