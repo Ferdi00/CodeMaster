@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link,useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
-import { createUserDocument } from "../../Dao/UserDao";
+import { createUserDocument, createUserDocumentWithGoogle } from "../../Dao/UserDao";
 
 const Signup = () => {
 
@@ -33,6 +33,7 @@ const Signup = () => {
     try {
       const newUser = await signInWithGoogle();
             if(!newUser) return;
+            createUserDocumentWithGoogle(newUser);
             navigate("/introduzione");
     } catch (error) {
       console.error(error);

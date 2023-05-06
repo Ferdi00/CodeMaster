@@ -23,12 +23,12 @@ const Navbar = () => {
 	return (
 		<div className="navbar">
 
-			<Link to="/introduzione" className="logo"><img src={logo} alt="logo"></img></Link>
+			<Link to="/" className="logo"><img src={logo} alt="logo"></img></Link>
 
 			{user &&	
 			<section className="middle centered">
-				<div centered>
-  			<h3>Liv:{lev}</h3><ProgressBar completed={exp} bgColor='#ea2b2b' height='22px' animateOnRender="true" labelAlignment="center" />
+				<div>
+  			<h3>Liv:{lev}</h3><ProgressBar completed={exp} bgColor='#ea2b2b' height='22px' animateOnRender= {true} labelAlignment="center" />
 				</div>
 				<img src={coin} alt="coin"/><h2>x0</h2> 
 				</section> 

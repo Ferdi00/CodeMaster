@@ -1,19 +1,53 @@
-import React from 'react'
+import {React,useState ,useEffect}from 'react'
 import '../styles/Left.css'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import next from "../svg/next.svg";
 import back from "../svg/back.svg";
-import Text from "./pages/introduzione";
-import {Link} from 'react-router-dom'
-
+import {Link, Routes, useNavigate, Route, useParams} from 'react-router-dom';
+import {problems} from "./Data"
 
 const percentage = 0;
 const Left = () => {
+  
+  const navigate = useNavigate();
+  const [problemList, setProblemList] = useState(problems);
+  const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+  <Link to={`/${problemList[currentProblemIndex].slug}`}></Link>
+
+  useEffect(() => {
+    if (problemList[currentProblemIndex]) {
+      navigate(`/${problemList[currentProblemIndex].slug}`);
+    }
+  }, [currentProblemIndex]);
+  
+  const nextProblem = () => {
+    setCurrentProblemIndex(currentProblemIndex === problemList.length - 1 ? currentProblemIndex : currentProblemIndex + 1);
+  };
+  
+  const previousProblem = () => {
+    setCurrentProblemIndex(currentProblemIndex === 0 ? 0 : currentProblemIndex - 1);
+  };
+  
+  const ProblemDisplay = () => {
+    const { slug } = useParams();
+    const problem = problemList.find(p => p.slug === slug);
+    return (
+      <div>
+        <h1>{problem.title}</h1>
+        <h3>{problem.description}</h3>
+        <h3 >Problema:{problem.problem}</h3>
+        <h3>Soluzione:{problem.sol}</h3>
+      </div>
+    );
+  }
+
   return (
     <div className=" left">
       <div className="status">
-         <button className='frecce'><img alt="back" src={back}></img></button>
+         <button className='frecce'
+         onClick={previousProblem}>
+          <img alt="back" src={back}></img></button>
           <div className="progress">
           <label className="centered ">Completato:</label>
           <CircularProgressbar 
@@ -59,11 +93,15 @@ const Left = () => {
           backgroundPadding={9}
           />
         </div>
-          <button className='frecce'> <Link to='/operatori_numerici'><img alt="next" src={next}></img></Link>
+          <button className='frecce'
+          onClick={nextProblem}>
+            <img alt="next" src={next}></img>
           </button> 
       </div>
-    <div className="text"> 
-    <Text/>
+    <div className="text">
+     <Routes>
+      <Route path={`/:slug`} element={<ProblemDisplay />}> </Route>
+      </Routes> 
     </div>
     </div>
 )

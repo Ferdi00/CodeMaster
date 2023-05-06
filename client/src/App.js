@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route , Navigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Left from "./components/Left";
 import Right from "./components/Right";
@@ -12,8 +12,10 @@ function App() {
 
   return (
     <Routes>
+
+      <Route path="/" element={<Navigate to="/introduzione_a_python" />} />
       <Route
-        path="/introduzione"
+        path="/*"
         element={
           <div className="App">
             <ToastContainer></ToastContainer>
@@ -36,7 +38,6 @@ function App() {
       <Route path="signup" element={<Signup />}></Route>
       <Route path="profile" element={<Profile />}></Route>
       
-			
     </Routes>
   );
 }

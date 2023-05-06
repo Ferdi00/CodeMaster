@@ -9,6 +9,7 @@ import { auth } from "../../firebase/firebase";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {showErrorToast} from "../ToastCustom"
+import {createUserDocumentWithGoogle } from "../../Dao/UserDao";
 
 const Login = () => {
 
@@ -32,6 +33,7 @@ const Login = () => {
     try {
       const newUser = await signInWithGoogle();
             if(!newUser) return;
+            createUserDocumentWithGoogle(newUser);
             navigate("/introduzione");
     } catch (error) {
       console.error(error);
