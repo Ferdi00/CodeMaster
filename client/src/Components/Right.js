@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState} from "react";
+import Split from "react-split";
 import "../styles/Right.css";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import spinner from "../svg/spinner.svg";
-import { showErrorToast, showWarningToast, showSuccessToast } from "./ToastCustom";
+import {
+  showErrorToast,
+  showWarningToast,
+  showSuccessToast,
+} from "./ToastCustom";
+
 
 function Right() {
+
   // State variable to set users source code
   const [userCode, setUserCode] = useState("");
 
@@ -35,10 +42,10 @@ function Right() {
   function compile() {
     setLoading(true);
 
-    if(userCode === ""){
-      showErrorToast("Errore: codice non valido o vuoto")
+    if (userCode === "") {
+      showErrorToast("Errore: codice non valido o vuoto");
       setLoading(false);
-      return
+      return;
     }
 
     const formData = {
@@ -62,85 +69,82 @@ function Right() {
     };
 
     axios
-    .request(options)
-    .then(function (response) {
-      console.log(" post response data: ", response.data);
-      let token = response.data.token;
-      checkStatus(token);
-    })
-    .catch((err) => {
-      let error = err.response ? err.response.data : err;
-      setLoading(false);
-      console.log(error);
-      showWarningToast();
-    });
-};
-
-let checkStatus = async (token) => {
-  const options = {
-    method: "GET",
-    url: process.env.REACT_APP_RAPID_API_URL + "/" + token,
-    params: { base64_encoded: "true", fields: "*" },
-    headers: {
-      "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
-      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-    },
-  };
-  try {
-    let response = await axios.request(options);
-    let statusId = response.data.status?.id;
-    // Processed - we have a result
-    if (statusId === 1 || statusId === 2) {
-      // still processing
-      setTimeout(() => {
-        checkStatus(token)
-      }, 2000)
-      return
-    } else {
-      setLoading(false)
-      console.log('get response data', response.data)
-      changeOutput(response.data)
-      return
-    }
-  } catch (err) {
-    console.log("error get:", err)
-    setLoading(false)
-    showWarningToast()
+      .request(options)
+      .then(function (response) {
+        console.log(" post response data: ", response.data);
+        let token = response.data.token;
+        checkStatus(token);
+      })
+      .catch((err) => {
+        let error = err.response ? err.response.data : err;
+        setLoading(false);
+        console.log(error);
+        showWarningToast();
+      });
   }
-};
+
+  let checkStatus = async (token) => {
+    const options = {
+      method: "GET",
+      url: process.env.REACT_APP_RAPID_API_URL + "/" + token,
+      params: { base64_encoded: "true", fields: "*" },
+      headers: {
+        "X-RapidAPI-Host": process.env.REACT_APP_RAPID_API_HOST,
+        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+      },
+    };
+    try {
+      let response = await axios.request(options);
+      let statusId = response.data.status?.id;
+      // Processed - we have a result
+      if (statusId === 1 || statusId === 2) {
+        // still processing
+        setTimeout(() => {
+          checkStatus(token);
+        }, 2000);
+        return;
+      } else {
+        setLoading(false);
+        console.log("get response data", response.data);
+        changeOutput(response.data);
+        return;
+      }
+    } catch (err) {
+      console.log("error get:", err);
+      setLoading(false);
+      showWarningToast();
+    }
+  };
 
   function changeOutput(outputDetails) {
     const statusId = outputDetails.status.id;
-    console.log("output details:", outputDetails)
+    console.log("output details:", outputDetails);
     if (statusId === 6) {
       // compilation error
-      setUserOutput(userOutput+window.atob(outputDetails.compile_output));
+      setUserOutput(userOutput + window.atob(outputDetails.compile_output));
       showErrorToast();
     }
     // compilation success
-  else if (statusId === 3) {
-    setUserOutput(userOutput+window.atob(outputDetails.stdout));
-    showSuccessToast();
+    else if (statusId === 3) {
+      setUserOutput(userOutput + window.atob(outputDetails.stdout));
+      showSuccessToast();
+    }
+    //time limit
+    else if (statusId === 5) {
+      setUserOutput(userOutput + "Time limit Exceed");
+      showErrorToast("Time limit Exceed");
+    } else {
+      setUserOutput(userOutput + window.atob(outputDetails.stderr));
+      showErrorToast();
+    }
   }
-  //time limit
-  else if (statusId === 5) {
-    setUserOutput(userOutput+"Time limit Exceed");
-    showErrorToast("Time limit Exceed");
-  }
-  else{
-    setUserOutput(userOutput+window.atob(outputDetails.stderr));
-    showErrorToast();
-  }
-}
-  
 
-   // Function to clear the output screen
-   function clearOutput() {
+  // Function to clear the output screen
+  function clearOutput() {
     setUserOutput("");
   }
 
   return (
-    
     <div className="right">
       <div className="controlBar centered">
         <div className="sin">
@@ -172,7 +176,7 @@ let checkStatus = async (token) => {
           </div>
         </div>
         <div className="des centered">
-          <label >Clear Output </label>
+          <label>Clear Output </label>
           <button id="clear" onClick={() => clearOutput()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,40 +191,55 @@ let checkStatus = async (token) => {
           </button>
         </div>
       </div>
-      <div className="editor">
-        <Editor
-          
-          options={options}
-          height="calc(66vh - 30px)"
-          width="100%"
-          theme={userTheme}
-          language={userLang}
-          defaultLanguage="python"
-          defaultValue="# Enter your code here"
-          onChange={(value) => {
-            setUserCode(value);
-          }}
-        />
-      </div>
-      <div className="container">
-        <div className="input">
-          <textarea
-            placeholder="INPUT:"
-            id="code-inp"
-            onChange={(e) => setUserInput(e.target.value)}
-          ></textarea>
+      <Split
+        className="split-ver"
+        sizes={[65, 35]}
+        direction="vertical"
+        minSize={200}
+        gutterSize={8}
+        gutterAlign="start"
+      >
+        <div>
+          <Editor
+            padding="0"
+            margin="0"
+            options={options}
+            theme={userTheme}
+            language={userLang}
+            defaultLanguage="python"
+            defaultValue="# Enter your code here"
+            onChange={(value) => {
+              setUserCode(value);
+            }}
+          />
         </div>
-        {loading ? (
-          <div className="spinner-box">
-            <img src={spinner} alt="Loading..." />
-          </div>
-        ) : (
-          <div className="output">
-            {/* <div className="out">OUTPUT:</div> */}
-            <textarea readOnly placeholder="OUTPUT:" value={userOutput}></textarea>
-          </div>
-        )}
-      </div>
+
+        <div className="container">
+          <Split className="split" minSize={100} gutterSize={9}>
+            <div className="input">
+              <textarea
+                placeholder="INPUT:"
+                id="code-inp"
+                onChange={(e) => setUserInput(e.target.value)}
+              ></textarea>
+            </div>
+            {loading ? (
+              <div className="spinner-box">
+                <img src={spinner} alt="Loading..." />
+              </div>
+            ) : (
+              <div className="output">
+                {/* <div className="out">OUTPUT:</div> */}
+                <textarea
+                  readOnly
+                  placeholder="OUTPUT:"
+                  value={userOutput}
+                ></textarea>
+              </div>
+            )}
+          </Split>
+        </div>
+      </Split>
     </div>
   );
 }

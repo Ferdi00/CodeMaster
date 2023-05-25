@@ -1,6 +1,3 @@
-
-
-
 export const problems = [
   {
     id: 0,
@@ -38,7 +35,7 @@ export const problems = [
     id: 1,
     slug: "operatori_numerici",
     title: "Operatori numerici",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -79,7 +76,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -88,7 +85,7 @@ export const problems = [
     id: 2,
     slug: "variabili_stringhe",
     title: "Variabili e stringhe",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -129,7 +126,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -138,7 +135,7 @@ export const problems = [
     id: 3,
     slug: "conversioni_e_funzioni",
     title: "Conversioni tra tipi di dato, funzioni print e input",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -179,7 +176,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -188,7 +185,7 @@ export const problems = [
     id: 4,
     slug: "algebra_booleana&operatori_comparazione",
     title: "Algebra Booleana e Operatori di Comparazione",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -229,7 +226,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -238,7 +235,7 @@ export const problems = [
     id: 5,
     slug: "cicli",
     title: "Ciclo while, istruzioni break e continue",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -279,7 +276,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -288,7 +285,7 @@ export const problems = [
     id: 6,
     slug: "cicli_2",
     title: "Il Ciclo for e la funzione range",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -329,7 +326,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -338,7 +335,7 @@ export const problems = [
     id: 7,
     slug: "moduli",
     title: "I Moduli della Standard Library",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -379,7 +376,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -388,7 +385,7 @@ export const problems = [
     id: 1,
     slug: "operatori_numerici",
     title: "Operatori numerici",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -429,7 +426,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -438,7 +435,7 @@ export const problems = [
     id: 1,
     slug: "operatori_numerici",
     title: "Operatori numerici",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -479,7 +476,7 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
@@ -488,7 +485,7 @@ export const problems = [
     id: 1,
     slug: "operatori_numerici",
     title: "Operatori numerici",
-    description:
+    description: (
       <div>
         <h3>Come commentare in Python</h3>
         <p>
@@ -529,11 +526,8 @@ export const problems = [
           sviluppare in modo facile e veloce le proprie applicazioni.
         </p>
       </div>
-    ,
+    ),
     problem: "esegui un operazione",
     sol: "Hello world",
   },
 ];
-
-
-

@@ -1,18 +1,23 @@
 import { React, useEffect, useState } from "react";
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle  } from "react-firebase-hooks/auth";
-import {auth} from "../../firebase/firebase"
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/firebase";
 import "../../styles/AuthPage.css";
 import Navbar from "../Navbar";
-import {ToastContainer} from 'react-toastify';
-import {showErrorToast} from "../ToastCustom"
+import { ToastContainer } from "react-toastify";
+import { showErrorToast } from "../ToastCustom";
 import "react-toastify/dist/ReactToastify.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
-import { createUserDocument, createUserDocumentWithGoogle } from "../../Dao/UserDao";
+import {
+  createUserDocument,
+  createUserDocumentWithGoogle,
+} from "../../Dao/UserDao";
 
 const Signup = () => {
-
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -27,48 +32,56 @@ const Signup = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const navigate = useNavigate();
-   const [signInWithGoogle] = useSignInWithGoogle(auth);
+  const [signInWithGoogle] = useSignInWithGoogle(auth);
 
   const googleSignIn = async (e) => {
     try {
       const newUser = await signInWithGoogle();
-            if(!newUser) return;
-            createUserDocumentWithGoogle(newUser);
-            navigate("/introduzione");
+      if (!newUser) return;
+      createUserDocumentWithGoogle(newUser);
+      navigate("/introduzione");
     } catch (error) {
       console.error(error);
     }
-  }
-
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if(!inputs.email || !inputs.password || !inputs.username || !inputs.password_confirm) return showErrorToast("Per favore inserisci tutti i campi");
-      
-    else if(inputs.password !== inputs.password_confirm) return showErrorToast("Le password non corrispondono, per favore riprova");
-
-    else try{
-            const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
-            if(!newUser) return;
-            createUserDocument(inputs,newUser.user.uid);
-            navigate("/introduzione");
-            
-        } catch (error) {
-            alert(error.message);
-        }
+    if (
+      !inputs.email ||
+      !inputs.password ||
+      !inputs.username ||
+      !inputs.password_confirm
+    )
+      return showErrorToast("Per favore inserisci tutti i campi");
+    else if (inputs.password !== inputs.password_confirm)
+      return showErrorToast(
+        "Le password non corrispondono, per favore riprova"
+      );
+    else
+      try {
+        const newUser = await createUserWithEmailAndPassword(
+          inputs.email,
+          inputs.password
+        );
+        if (!newUser) return;
+        createUserDocument(inputs, newUser.user.uid);
+        navigate("/introduzione");
+      } catch (error) {
+        alert(error.message);
+      }
   };
 
   useEffect(() => {
-    if(error){
-        console.log(error.message);
-        //showErrorToast(error.message);
-    } 
-  }, [error])
-  
+    if (error) {
+      console.log(error.message);
+      //showErrorToast(error.message);
+    }
+  }, [error]);
 
   return (
     <div>
-    <ToastContainer></ToastContainer>
+      <ToastContainer></ToastContainer>
       <Navbar></Navbar>
       <section className="auth-container forms">
         <div className="form signup">

@@ -1,5 +1,6 @@
 import "./styles/App.css";
-import { Routes, Route , Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { UserProvider } from "./components/Auth/UserContext";
 import Navbar from "./components/Navbar";
 import Left from "./components/Left";
 import Right from "./components/Right";
@@ -8,37 +9,66 @@ import Signup from "./components/Auth/Signup";
 import Profile from "./components/Auth/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Split from "react-split";
+import { useEffect } from "react";
+
 function App() {
 
-  return (
-    <Routes>
+useEffect(() => {
+  window.addEventListener("error", (e) => {
+    if (
+      e.message === "ResizeObserver loop limit exceeded" ||
+      e.message ===
+        "ResizeObserver loop completed with undelivered notifications."
+    ) {
+      const resizeObserverErrDiv = document.getElementById(
+        "webpack-dev-server-client-overlay-div"
+      );
+      const resizeObserverErr = document.getElementById(
+        "webpack-dev-server-client-overlay"
+      );
+      if (resizeObserverErr) {
+        resizeObserverErr.setAttribute("style", "display: none");
+      }
+      if (resizeObserverErrDiv) {
+        resizeObserverErrDiv.setAttribute("style", "display: none");
+      }
+    }
+  });
+}, []);
 
+  return (
+    <UserProvider>
+    <Routes>
       <Route path="/" element={<Navigate to="/introduzione_a_python" />} />
       <Route
         path="/*"
         element={
-          <div className="App">
+          <div className="App font layout ">
             <ToastContainer></ToastContainer>
-            <div className="layout font">
-              <Navbar></Navbar>
-              <div className="right centered ">
-                <Right></Right>
-              </div>
-              <div className="left ">
+            <Navbar></Navbar>
+            <Split
+              sizes={[40, 60]}
+              className="split"
+              minSize={550}
+              gutterSize={9}
+              gutterAlign="start"
+            >
+              <div>
                 <Left></Left>
               </div>
-              {/* <div className="footer centered"><Footer></Footer></div>	 */}
-            </div>
+              <div>
+                <Right></Right>
+              </div>
+            </Split>
           </div>
         }
-      >	
-			</Route>
-
+      ></Route>
       <Route path="login" element={<Login />}></Route>
       <Route path="signup" element={<Signup />}></Route>
       <Route path="profile" element={<Profile />}></Route>
-      
-    </Routes>
+      </Routes>
+    </UserProvider>
   );
 }
 

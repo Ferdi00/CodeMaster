@@ -15,6 +15,7 @@ const createUserDocument = async (inputs, uid) => {
       level: 1,
       exp: 0,
       coin: 0,
+      img: "",
       created_at: new Date(),
     });
   } catch (error) {
@@ -42,12 +43,33 @@ const createUserDocumentWithGoogle = async (newUser) => {
 };
 
 const getUserById = async (id) => {
+
+  const userInfo = {
+    img: "",
+    username: "",
+    email: "",
+    description: "",
+    level: 1,
+    exp: 0,
+    coin: 0,
+    created_at: new Date(),
+  };
+
   if (!id) return;
   const docRef = doc(firestore, "users", id);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return docSnap.data();
+    userInfo.username = docSnap.data().username;
+    userInfo.img = docSnap.data().img;
+    userInfo.email = docSnap.data().email;
+    userInfo.description = docSnap.data().description;
+    userInfo.level = docSnap.data().level;
+    userInfo.exp = docSnap.data().exp;
+    userInfo.coin = docSnap.data().coin;
+    userInfo.created_at = docSnap.data().created_at;
+    
+    return userInfo;
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!");
@@ -58,7 +80,6 @@ const getUserById = async (id) => {
 
 const updateUserDocument = async (id, newData) => {
   const file = newData.img;
-  const name = new Date().getTime() + file.name;
   const storageRef = ref(storage, file.name);
   const uploadTask = uploadBytesResumable(storageRef, file);
   const docRef = doc(firestore, "users", id);
@@ -74,12 +95,13 @@ const updateUserDocument = async (id, newData) => {
         case "running":
           console.log("Upload is running");
           break;
-        default:
+        default: 
           break;
       }
     },
     (error) => {
       console.log(error);
+      return false;
     },
 
     () => {

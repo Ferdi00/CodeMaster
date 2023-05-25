@@ -1,4 +1,4 @@
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const showErrorToast = (msg) => {
@@ -39,5 +39,3 @@ export const showWarningToast = (msg) => {
     progress: undefined,
   });
 };
-
-

@@ -1,20 +1,19 @@
-.controlBar{
+.controlBar {
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
-  text-align:center;
+  text-align: center;
   gap: 0.5rem;
-  height:3.4rem;
-  width:100%;
-  background-color:green;
+  height: 3.4rem;
+  background-color: green;
   border: black 1px solid;
 }
 
-.sin{
-  display: flex; 
+.sin {
+  display: flex;
 }
 
-.spinner-box{
+.spinner-box {
   margin-left: 7px;
   flex: 70%;
   background-color: #242424;
@@ -23,32 +22,31 @@
   justify-content: center;
   align-items: center;
 }
-.spinner-box img{
+.spinner-box img {
   width: 150px;
 }
 
-.des{
-  font-size:1.2rem;
-  gap:5px;
-  display: flex; 
+.des {
+  font-size: 1.2rem;
+  gap: 5px;
+  display: flex;
   padding-right: 2rem;
 }
 
-
-.fs{
+.fs {
   margin-left: 4px;
   display: flex;
-  gap:5px;
+  gap: 5px;
   background-color: #242424;
   border: black 1px solid;
   border-radius: 15px;
   padding-left: 5px;
   padding-right: 0;
-  font-size:1.2rem;
+  font-size: 1.2rem;
 }
 
-.controlBar button{
-  color:white;
+.controlBar button {
+  color: white;
   width: 3.8rem;
   height: 2.3rem;
   border-radius: 15px;
@@ -56,7 +54,7 @@
   border: black 1px solid;
 }
 
-.controlBar button:hover{
+.controlBar button:hover {
   background-color: #64c876;
   color: black;
 }
@@ -79,61 +77,51 @@ input[type="range"]::-webkit-slider-thumb {
   border: 1px solid black;
   background: #e9900c;
   box-shadow: 0 0 2px 0 #555;
-  transition:.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
-input[type=range]::-webkit-slider-runnable-track  {
+input[type="range"]::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   box-shadow: none;
   border: none;
   background: transparent;
 }
 
-
-.right{
-  margin-top: 0.2rem;
-  margin-left: 0.5rem;
-  width: 100%;
-  height: 100vh;
+.right {
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
-  margin: 2px black solid;
 }
 
-.container{
-  margin-top: 5px;
+.container {
   display: flex;
+  margin-top: 5px;
   margin-bottom: 0;
-  flex-direction: row;
-  height: calc(35vh - 47px );
-  overflow:auto;
+  /* height: calc(35vh - 47px); */
+  overflow: none;
 }
 
-.input{
-  flex: 50%;
+.input {
   font-size: 16px;
 }
 
-.output{
+.output {
   padding: 5px;
-  margin-left: 7px;
-  flex: 70%;
   background-color: #242424;
-  overflow-y: auto;
+  overflow-y: clip;
   color: white;
-  position: relative;
 }
 
-.output pre{
+.output pre {
   font-size: 15px;
   white-space: pre-wrap;
 }
 
-#code-inp{
+.input textarea {
+  width: 100%;
   border: none;
   font-size: 20px;
   box-sizing: border-box;
-  width: 100%;
   height: 100%;
   resize: none;
   background-color: #242424;
@@ -141,29 +129,21 @@ input[type=range]::-webkit-slider-runnable-track  {
   padding: 5px;
 }
 
-#code-inp::placeholder{
+#code-inp::placeholder {
   font-size: 19.5px;
- font-weight: bold;
- color: #e9900c;
+  font-weight: bold;
+  color: #e9900c;
 }
 
-#code-inp:focus{
+#code-inp:focus {
   outline: none;
 }
 
-.out{
-  background-color:rgb(179,179,179);
-  color: #3cdfff;
-  font-size: 17px;
-  font-weight: bold;
-}
-
-.output textarea{
+.output textarea {
+  width: 100%;
   background-color: #242424;
   border: none;
-  width: 100%;
   height: 100%;
-  overflow-x: hidden;
   resize: none;
   outline: none;
   font-size: 18px;
@@ -171,13 +151,17 @@ input[type=range]::-webkit-slider-runnable-track  {
   color: white;
 }
 
-.output textarea::placeholder{
+.output textarea::placeholder {
   font-size: 19.5px;
- font-weight: bold;
- color: #e9900c;
+  font-weight: bold;
+  color: #e9900c;
 }
 
-#clear{
+#clear {
   margin-left: 2px;
+}
+
+.editor{
+
 }
 

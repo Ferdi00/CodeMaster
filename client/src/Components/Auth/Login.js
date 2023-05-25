@@ -4,16 +4,18 @@ import Navbar from "../Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
 import fb_icon from "../../svg/facebook.svg";
-import { useSignInWithEmailAndPassword, useSignInWithGoogle} from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {showErrorToast} from "../ToastCustom"
-import {createUserDocumentWithGoogle } from "../../Dao/UserDao";
+import { showErrorToast } from "../ToastCustom";
+import { createUserDocumentWithGoogle } from "../../Dao/UserDao";
 
 const Login = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
     email: "",
@@ -32,13 +34,13 @@ const Login = () => {
   const googleSignIn = async (e) => {
     try {
       const newUser = await signInWithGoogle();
-            if(!newUser) return;
-            createUserDocumentWithGoogle(newUser);
-            navigate("/introduzione");
+      if (!newUser) return;
+      createUserDocumentWithGoogle(newUser);
+      navigate("/introduzione");
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -58,10 +60,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if(error){
-        showErrorToast(error.message);
-    } 
-  }, [error])
+    if (error) {
+      showErrorToast(error.message);
+    }
+  }, [error]);
 
   return (
     <div>
@@ -94,9 +96,7 @@ const Login = () => {
               </div>
 
               <div className="form-link">
-                <a className="forgot-pass">
-                  Password dimenticata?
-                </a>
+                <a className="forgot-pass">Password dimenticata?</a>
               </div>
 
               <div className="field button-field">
@@ -117,7 +117,7 @@ const Login = () => {
           <div className="line"></div>
 
           <div className="media-options">
-            <a  className="field facebook">
+            <a className="field facebook">
               <img
                 src={fb_icon}
                 alt=""
