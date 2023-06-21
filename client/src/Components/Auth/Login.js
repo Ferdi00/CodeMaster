@@ -12,7 +12,7 @@ import { auth } from "../../firebase/firebase";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showErrorToast } from "../ToastCustom";
-import { createUserDocumentWithGoogle } from "../../Dao/UserDao";
+import { createUserDocumentWithGoogle } from "../../FirebaseDataManager/UserManager";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Login = () => {
       const newUser = await signInWithGoogle();
       if (!newUser) return;
       createUserDocumentWithGoogle(newUser);
-      navigate("/introduzione");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

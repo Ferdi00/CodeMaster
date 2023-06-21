@@ -1,4 +1,4 @@
-export const problems = [
+export const data = [
   {
     id: 0,
     slug: "introduzione_a_python",
@@ -382,9 +382,9 @@ export const problems = [
   },
 
   {
-    id: 1,
-    slug: "operatori_numerici",
-    title: "Operatori numerici",
+    id: 8,
+    slug: "parte8",
+    title: "parte8",
     description: (
       <div>
         <h3>Come commentare in Python</h3>
@@ -432,9 +432,9 @@ export const problems = [
   },
 
   {
-    id: 1,
-    slug: "operatori_numerici",
-    title: "Operatori numerici",
+    id: 9,
+    slug: "parte9",
+    title: "parte9",
     description: (
       <div>
         <h3>Come commentare in Python</h3>
@@ -482,9 +482,9 @@ export const problems = [
   },
 
   {
-    id: 1,
-    slug: "operatori_numerici",
-    title: "Operatori numerici",
+    id: 10,
+    slug: "parte10",
+    title: "parte10",
     description: (
       <div>
         <h3>Come commentare in Python</h3>

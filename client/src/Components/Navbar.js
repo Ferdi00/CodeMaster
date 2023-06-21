@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Navbar.css";
 import logo from "../svg/logo.svg";
 import avatar from "../svg/avatar.png";
@@ -17,7 +17,6 @@ const Navbar = () => {
     window.location.reload();
   };
  
-  
   return (
     <div className="navbar">
       <Link to="/" className="logo">
@@ -29,7 +28,7 @@ const Navbar = () => {
           <div>
             <h3>Liv:{userData.level}</h3>
             <ProgressBar
-              completed={userData.exp}
+              completed={userData.expPercentuale || 1}
               bgColor="#ea2b2b"
               height="22px"
               animateOnRender={true}
@@ -37,7 +36,7 @@ const Navbar = () => {
             />
           </div>
           <img src={coin} alt="coin" />
-          <h2>x0</h2>
+          <h2>x{userData.coin}</h2>
         </section>
       )}
 

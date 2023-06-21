@@ -1,6 +1,7 @@
 @import "../../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../../node_modules/@syncfusion/ej2-layouts/styles/material.css";
 
+
 .layout{
  display: flex;
  flex-direction: column;                 
@@ -23,10 +24,6 @@ body {
 
 .font {
   color: white;
-}
-
-html {
-  margin: 0;
 }
 
 .split{

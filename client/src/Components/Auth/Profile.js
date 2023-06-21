@@ -7,7 +7,7 @@ import "../../styles/Profile.css";
 import avatar from "../../svg/avatar.png";
 import coin from "../../svg/dollar.png";
 import ProgressBar from "@ramonak/react-progress-bar";
-import { updateUserDocument } from "../../Dao/UserDao";
+import { updateUserDocument } from "../../FirebaseDataManager/UserManager";
 import { useUserContext } from "./UserContext";
 import { ToastContainer } from "react-toastify";
 import { showErrorToast, showSuccessToast } from "../ToastCustom";
@@ -21,7 +21,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const userContextData = useUserContext();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
@@ -47,12 +47,15 @@ const Profile = () => {
     } else {
       setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
+
+    console.log(userData);
   };
 
   const updateUser = async () => {
     try {
       await updateUserDocument(user.uid, userData);
       showSuccessToast("Profilo modificato con successo");
+      window.location.reload();
     } catch (error) {
       showErrorToast("Errore modifica profilo");
     }
@@ -95,7 +98,7 @@ const Profile = () => {
                 <div>
                   <h2 className="centered font">Liv:{userData.level}</h2>
                   <ProgressBar
-                    completed={userData.exp}
+                    completed={userData.expPercentuale || 1}
                     bgColor="#ea2b2b"
                     width="200px"
                     height="24px"
@@ -105,13 +108,14 @@ const Profile = () => {
                 </div>
                 <div className="coin">
                   <img src={coin} alt="image_coin" />
-                  <h2>= 0</h2>
+                  <h2>x {userData.coin}</h2>
                 </div>
                 <div className="description ">
                   <textarea
                     onChange={handleChangeInput}
                     type="text"
-                    value={userData.description}
+                    name="description"
+                    value={userData.description || undefined}
                     defaultValue="Inserisci una descrizione"
                   ></textarea>
                 </div>

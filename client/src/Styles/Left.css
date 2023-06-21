@@ -50,3 +50,34 @@
   width: 7rem;
   margin-right: 10px;
 }
+
+.switch_button{
+  margin: 0.2rem;
+  width: 12rem;
+  padding:auto;
+}
+
+.switch_button button{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  font-size: 75%;
+  color: white;
+  background-color:#292929;
+  border: none;
+  cursor: pointer;
+}
+
+.switch_button img{
+  transition: transform 0.5s;
+}
+
+.switch_button:hover img{
+  transform: rotate(360deg);
+}
+
+.text_a{
+  position: relative;
+  left: 35%;
+  align-self: center;
+}

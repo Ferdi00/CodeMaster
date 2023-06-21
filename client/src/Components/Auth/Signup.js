@@ -15,7 +15,7 @@ import fb_icon from "../../svg/facebook.svg";
 import {
   createUserDocument,
   createUserDocumentWithGoogle,
-} from "../../Dao/UserDao";
+} from "../../FirebaseDataManager/UserManager";
 
 const Signup = () => {
   const [inputs, setInputs] = useState({
@@ -39,7 +39,7 @@ const Signup = () => {
       const newUser = await signInWithGoogle();
       if (!newUser) return;
       createUserDocumentWithGoogle(newUser);
-      navigate("/introduzione");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +66,7 @@ const Signup = () => {
         );
         if (!newUser) return;
         createUserDocument(inputs, newUser.user.uid);
-        navigate("/introduzione");
+        navigate("/");
       } catch (error) {
         alert(error.message);
       }

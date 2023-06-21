@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import Split from "react-split";
 import "../styles/Right.css";
 import Editor from "@monaco-editor/react";
@@ -7,32 +7,35 @@ import spinner from "../svg/spinner.svg";
 import {
   showErrorToast,
   showWarningToast,
-  showSuccessToast,
 } from "./ToastCustom";
+import { useUserContext } from "./Auth/UserContext";
 
-
-function Right() {
-
+function Right({sharedUserOutput ,setSharedUserOutput }) {
   // State variable to set users source code
   const [userCode, setUserCode] = useState("");
-
   const userLang = "python";
-
   // State variable to set editors default theme
   const userTheme = "vs-dark";
-
   // State variable to set editors default font size
   const [fontSize, setFontSize] = useState(20);
-
   // State variable to set users input
   const [userInput, setUserInput] = useState("");
-
   // State variable to set users output
   const [userOutput, setUserOutput] = useState("");
-
   // Loading state variable to show spinner
   // while fetching data
   const [loading, setLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const userContextData = useUserContext();
+
+  useEffect(() => {
+    setUserOutput(sharedUserOutput);
+  }, [sharedUserOutput]);
+
+  
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
 
   const options = {
     fontSize: fontSize,
@@ -71,14 +74,13 @@ function Right() {
     axios
       .request(options)
       .then(function (response) {
-        console.log(" post response data: ", response.data);
         let token = response.data.token;
         checkStatus(token);
       })
       .catch((err) => {
         let error = err.response ? err.response.data : err;
-        setLoading(false);
         console.log(error);
+        setLoading(false);
         showWarningToast();
       });
   }
@@ -105,12 +107,10 @@ function Right() {
         return;
       } else {
         setLoading(false);
-        console.log("get response data", response.data);
         changeOutput(response.data);
         return;
       }
     } catch (err) {
-      console.log("error get:", err);
       setLoading(false);
       showWarningToast();
     }
@@ -118,23 +118,25 @@ function Right() {
 
   function changeOutput(outputDetails) {
     const statusId = outputDetails.status.id;
-    console.log("output details:", outputDetails);
     if (statusId === 6) {
       // compilation error
-      setUserOutput(userOutput + window.atob(outputDetails.compile_output));
+      setUserOutput(window.atob(outputDetails.compile_output));
       showErrorToast();
     }
     // compilation success
     else if (statusId === 3) {
-      setUserOutput(userOutput + window.atob(outputDetails.stdout));
-      showSuccessToast();
+      var compilationResult = window.atob(outputDetails.stdout);
+      setUserOutput(compilationResult);
+      if (isChecked) {
+         setSharedUserOutput(window.atob(outputDetails.stdout));
+      }
     }
     //time limit
     else if (statusId === 5) {
-      setUserOutput(userOutput + "Time limit Exceed");
+      setUserOutput("Time limit Exceed");
       showErrorToast("Time limit Exceed");
     } else {
-      setUserOutput(userOutput + window.atob(outputDetails.stderr));
+      setUserOutput(window.atob(outputDetails.stderr));
       showErrorToast();
     }
   }
@@ -175,6 +177,29 @@ function Right() {
             />
           </div>
         </div>
+
+        {userContextData && (
+          <div style={{ display: "flex", gap: "6px" }}>
+            <label className="centered" style={{ fontSize: "1.25rem" }}>
+              Submit
+            </label>
+            <div className="flipswitch">
+              <input
+                type="checkbox"
+                name="flipswitch"
+                className="flipswitch-cb"
+                id="fs"
+                checked={isChecked}
+                onChange={handleToggle}
+              />
+              <label className="flipswitch-label" htmlFor="fs">
+                <div className="flipswitch-inner"></div>
+                <div className="flipswitch-switch"></div>
+              </label>
+            </div>
+          </div>
+        )}
+
         <div className="des centered">
           <label>Clear Output </label>
           <button id="clear" onClick={() => clearOutput()}>
