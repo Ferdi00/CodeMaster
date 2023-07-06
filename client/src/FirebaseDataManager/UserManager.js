@@ -3,9 +3,14 @@ import {
   doc,
   setDoc,
   getDoc,
+  getDocs,
   updateDoc,
   arrayUnion,
   increment,
+  collection,
+  orderBy,
+  query,
+  limit
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -133,7 +138,26 @@ const updateUserLevel = async (id, newLevel) => {
    }
 }
 
+const getUserLeaderBoard = async () => {
+   const leaderboardRef = collection(firestore, "users");
+  try {
+    const leaderboardQuery = query(
+      leaderboardRef,
+      orderBy("exp", "desc"),
+      limit(5)
+    );
+    const snapshot = await getDocs(leaderboardQuery);
+    const leaderboard = snapshot.docs.map((doc) => doc.data());
+    return leaderboard;
+
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export {
+  getUserLeaderBoard,
   createUserDocument,
   createUserDocumentWithGoogle,
   getUserById,

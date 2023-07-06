@@ -4,13 +4,10 @@ import "../styles/Right.css";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import spinner from "../svg/spinner.svg";
-import {
-  showErrorToast,
-  showWarningToast,
-} from "./ToastCustom";
+import { showErrorToast, showWarningToast } from "./ToastCustom";
 import { useUserContext } from "./Auth/UserContext";
 
-function Right({sharedUserOutput ,setSharedUserOutput }) {
+function Right({ sharedUserOutput, setSharedUserOutput }) {
   // State variable to set users source code
   const [userCode, setUserCode] = useState("");
   const userLang = "python";
@@ -32,13 +29,20 @@ function Right({sharedUserOutput ,setSharedUserOutput }) {
     setUserOutput(sharedUserOutput);
   }, [sharedUserOutput]);
 
-  
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
 
   const options = {
     fontSize: fontSize,
+    acceptSuggestionOnEnter: "on",
+    autoClosingBrackets: "auto",
+    autoIndent: "full",
+    detectIndentation: true,
+    automaticLayout: true,
+    formatOnPaste: true,
+    formatOnType: true,
+    multiCursorPaste: "full"
   };
 
   // Function to call the compile endpoint
@@ -128,7 +132,7 @@ function Right({sharedUserOutput ,setSharedUserOutput }) {
       var compilationResult = window.atob(outputDetails.stdout);
       setUserOutput(compilationResult);
       if (isChecked) {
-         setSharedUserOutput(window.atob(outputDetails.stdout));
+        setSharedUserOutput(window.atob(outputDetails.stdout));
       }
     }
     //time limit

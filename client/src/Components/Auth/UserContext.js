@@ -12,6 +12,9 @@ const progressioneLivelli = [
   { livello: 2, exp_necessaria: 100 },
   { livello: 3, exp_necessaria: 150 },
   { livello: 4, exp_necessaria: 200 },
+  { livello: 5, exp_necessaria: 250 },
+  { livello: 6, exp_necessaria: 300 },
+  { livello: 7, exp_necessaria: 350 },
   // Aggiungi altri livelli come necessario
 ];
 

@@ -17,7 +17,37 @@
   overflow: auto;
 }
 
-.text h3 {
+.text h1 {
+  color: #1a6209;
+  font-size: 30px;
+}
+
+.text h2 {
+  color: #b1aaaa;
+  font-size: 20px;
+}
+
+.text p {
+  color: #d8cccc;
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+ code{
+  width: max-content;
+  padding: 2px;
+  background-color: #333131;
+  color: rgb(211, 30, 30);
+  font-size: 18px;
+}
+
+pre {
+  width: 100%;
+  background-color: #333131;
+  padding: 10px;
+  font-size: 15px;
   font-weight: 300;
 }
 
@@ -51,32 +81,32 @@
   margin-right: 10px;
 }
 
-.switch_button{
+.switch_button {
   margin: 0.2rem;
   width: 12rem;
-  padding:auto;
+  padding: auto;
 }
 
-.switch_button button{
+.switch_button button {
   display: flex;
   height: 100%;
   width: 100%;
   font-size: 75%;
   color: white;
-  background-color:#292929;
+  background-color: #292929;
   border: none;
   cursor: pointer;
 }
 
-.switch_button img{
+.switch_button img {
   transition: transform 0.5s;
 }
 
-.switch_button:hover img{
+.switch_button:hover img {
   transform: rotate(360deg);
 }
 
-.text_a{
+.text_a {
   position: relative;
   left: 35%;
   align-self: center;

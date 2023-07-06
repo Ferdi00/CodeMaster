@@ -1,26 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Navbar.css";
-import logo from "../svg/logo.svg";
+import logo from "../svg/logo.png";
 import avatar from "../svg/avatar.png";
+import lb from "../svg/lb.png";
 import { Link } from "react-router-dom";
 import {useSignOut} from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import coin from "../svg/dollar.png";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { useUserContext } from "./Auth/UserContext";
+import { getUserLeaderBoard } from "../FirebaseDataManager/UserManager";
+
 
 const Navbar = () => {
+  const [showPosition, setShowPosition] = useState(false);
+   const [leaderboardData, setLeaderboardData] = useState([]);
   const [signOut] = useSignOut(auth);
   const userData = useUserContext();
   const handleLogout = () => {
     signOut();
     window.location.reload();
   };
+
+  const handleClick = () => {
+    setShowPosition(!showPosition);
+    console.log("🚀 ~ file: Navbar.js:26 ~ handleClick ~ showPosition:", showPosition)
+    
+  };
+
+ useEffect(() => {
+   const fetchLeaderboardData = async () => {
+     const leaderboard = await getUserLeaderBoard();
+       console.log(leaderboard);
+     setLeaderboardData(leaderboard);
+   };
+
+   fetchLeaderboardData();
+   console.log(leaderboardData);
+ }, []);
+  
  
   return (
     <div className="navbar">
       <Link to="/" className="logo">
-        <img src={logo} alt="logo"></img>
+        <img className="logo" src={logo} alt="logo"></img>
       </Link>
 
       {userData && (
@@ -35,8 +58,43 @@ const Navbar = () => {
               labelAlignment="center"
             />
           </div>
-          <img src={coin} alt="coin" />
+          <img className="coin" src={coin} alt="coin" />
           <h2>x{userData.coin}</h2>
+          <div className="leaderboard-wrapper">
+            <img
+              className="lb"
+              src={lb}
+              alt="leaderboard"
+              onClick={handleClick}
+            />
+            {showPosition && (
+              <div className="position-box">
+                <h3 className="centered">Classifica</h3>
+                <table id="leaderboard-table">
+                  <thead>
+                    <tr>
+                      <th>Utente</th>
+                      <th>Livello</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                <ol id="leaderboard-list">
+                  {leaderboardData.map((item, index) => (
+                    <li className="leader" key={index}>
+                      <img
+                        className="avatar"
+                        src={item.img ? item.img : avatar}
+                        alt={item.username}
+                      />
+                      <span className="username">{item.username}</span>
+                      <span className="level">{item.level}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+          </div>
         </section>
       )}
 
@@ -61,3 +119,5 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+
