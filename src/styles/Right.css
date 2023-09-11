@@ -1,0 +1,251 @@
+.controlBar {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  text-align: center;
+  gap: 0.5rem;
+  height: 3.4rem;
+  background-color: green;
+  border: black 1px solid;
+}
+
+.sin {
+  display: flex;
+}
+
+.spinner-box {
+  margin-left: 7px;
+  flex: 70%;
+  background-color: #242424;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.spinner-box img {
+  width: 150px;
+}
+
+.des {
+  font-size: 1.2rem;
+  gap: 5px;
+  display: flex;
+  padding-right: 2rem;
+}
+
+.fs {
+  margin-left: 4px;
+  display: flex;
+  gap: 5px;
+  background-color: #242424;
+  border: black 1px solid;
+  border-radius: 15px;
+  padding-left: 5px;
+  padding-right: 0;
+  font-size: 1.2rem;
+}
+
+.controlBar button {
+  color: white;
+  width: 3.8rem;
+  height: 2.3rem;
+  border-radius: 15px;
+  background-color: #242424;
+  border: black 1px solid;
+}
+
+.controlBar button:hover {
+  background-color: #64c876;
+  color: black;
+}
+
+input[type="range"] {
+  appearance: none;
+  margin-right: 15px;
+  width: 6rem;
+  height: 6px;
+  border-radius: 4px;
+  background-size: 70% 100%;
+  background-repeat: no-repeat;
+}
+
+input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background: #e9900c;
+  box-shadow: 0 0 2px 0 #555;
+  transition: 0.3s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 1px solid black;
+  background: #e9900c;
+  box-shadow: 0 0 2px 0 #555;
+  transition: 0.3s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+input[type="range"]::-moz-range-track {
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+.right {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 0;
+  /* height: calc(35vh - 47px); */
+  overflow: none;
+}
+
+.input {
+  font-size: 16px;
+}
+
+.output {
+  padding: 5px;
+  background-color: #242424;
+  overflow-y: clip;
+  color: white;
+}
+
+.output pre {
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.input textarea {
+  width: 100%;
+  border: none;
+  font-size: 20px;
+  box-sizing: border-box;
+  height: 100%;
+  resize: none;
+  background-color: #242424;
+  color: white;
+  padding: 5px;
+}
+
+#code-inp::placeholder {
+  font-size: 19.5px;
+  font-weight: bold;
+  color: #e9900c;
+}
+
+#code-inp:focus {
+  outline: none;
+}
+
+.output textarea {
+  width: 100%;
+  background-color: #242424;
+  border: none;
+  height: 100%;
+  resize: none;
+  outline: none;
+  font-size: 18px;
+  box-sizing: border-box;
+  color: white;
+}
+
+.output textarea::placeholder {
+  font-size: 19.5px;
+  font-weight: bold;
+  color: #e9900c;
+}
+
+#clear {
+  margin-left: 2px;
+}
+
+
+.flipswitch {
+  position: relative;
+  width: 74px;
+}
+.flipswitch input[type=checkbox] {
+  display: none;
+}
+.flipswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid #000000;
+  border-radius: 18px;
+}
+.flipswitch-inner {
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.flipswitch-inner:before, .flipswitch-inner:after {
+  float: left;
+  width: 50%;
+  height: 27px;
+  padding: 0;
+  line-height: 27px;
+  font-size: 16px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.flipswitch-inner:before {
+  content: "ON";
+  padding-left: 0px;
+  background-color: #e9900c;
+  color: #FFFFFF;
+  padding-left: 5px;
+  text-align: left;
+}
+.flipswitch-inner:after {
+  content: "OFF";
+  padding-right: 5px;
+  background-color: #242424;
+  color: #888888;
+  text-align: right;
+}
+.flipswitch-switch {
+  width: 18px;
+  margin: 5.5px;
+  background: #f7f7f7;
+  border: 2px solid #000000;
+  border-radius: 18px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 46px;
+  transition: all 0.3s ease-in 0s;
+}
+.flipswitch-cb:checked + .flipswitch-label .flipswitch-inner {
+  margin-left: 0;
+}
+.flipswitch-cb:checked + .flipswitch-label .flipswitch-switch {
+  right: 0;
+}
+
+
+
+
+
