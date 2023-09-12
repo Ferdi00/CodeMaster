@@ -12,8 +12,6 @@ import problem_icon from "../svg/coding.png";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useUserContext } from "./Auth/UserContext";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'; 
 
 
 const Left = ({ sharedUserOutput }) => {

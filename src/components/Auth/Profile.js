@@ -47,8 +47,6 @@ const Profile = () => {
     } else {
       setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
-
-    console.log(userData);
   };
 
   const updateUser = async () => {

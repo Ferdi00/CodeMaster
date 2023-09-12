@@ -11,7 +11,6 @@ import { showErrorToast } from "../ToastCustom";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
-import fb_icon from "../../svg/facebook.svg";
 import {
   createUserDocument,
   createUserDocumentWithGoogle,
@@ -29,7 +28,7 @@ const Signup = () => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, error] =
     useCreateUserWithEmailAndPassword(auth);
   const navigate = useNavigate();
   const [signInWithGoogle] = useSignInWithGoogle(auth);

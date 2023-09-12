@@ -3,7 +3,6 @@ import "../../styles/AuthPage.css";
 import Navbar from "../Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import google_icon from "../../svg/google.svg";
-import fb_icon from "../../svg/facebook.svg";
 import {
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
@@ -22,7 +21,7 @@ const Login = () => {
     password: "",
   });
 
-  const [signInWithEmailAndPassword, user, loading, error] =
+  const [signInWithEmailAndPassword, error] =
     useSignInWithEmailAndPassword(auth);
 
   const handleChangeInput = (e) => {
@@ -96,7 +95,9 @@ const Login = () => {
               </div>
 
               <div className="form-link">
-                <a className="forgot-pass">Password dimenticata?</a>
+                  <Link to="" className="link signup-link">
+                    Password dimenticata?
+                  </Link>
               </div>
 
               <div className="field button-field">
@@ -115,7 +116,6 @@ const Login = () => {
           </div>
 
           <div className="line"></div>
-
 
           <div className="media-options">
             <a onClick={googleSignIn} className="field google">

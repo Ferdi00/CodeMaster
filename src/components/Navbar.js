@@ -24,20 +24,17 @@ const Navbar = () => {
 
   const handleClick = () => {
     setShowPosition(!showPosition);
-    console.log("🚀 ~ file: Navbar.js:26 ~ handleClick ~ showPosition:", showPosition)
     
   };
 
  useEffect(() => {
    const fetchLeaderboardData = async () => {
      const leaderboard = await getUserLeaderBoard();
-       console.log(leaderboard);
      setLeaderboardData(leaderboard);
    };
 
    fetchLeaderboardData();
-   console.log(leaderboardData);
- }, []);
+ }, [leaderboardData]);
   
  
   return (
