@@ -34,7 +34,7 @@ const Navbar = () => {
    };
 
    fetchLeaderboardData();
- }, [leaderboardData]);
+ }, []);
   
  
   return (

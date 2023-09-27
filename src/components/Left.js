@@ -7,12 +7,15 @@ import back from "../svg/back.svg";
 import { Link, Routes, useNavigate, Route, useParams } from "react-router-dom";
 import { data } from "./Data";
 import getAllProblems from "../FirebaseDataManager/ProblemManager";
-import { updateUserDocumentProblemList } from "../FirebaseDataManager/UserManager";
+import {
+  updateUserDocumentProblemList,
+  helpRequest,
+} from "../FirebaseDataManager/UserManager";
 import problem_icon from "../svg/coding.png";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useUserContext } from "./Auth/UserContext";
-
+import { showErrorToast, showSuccessToast } from "./ToastCustom";
 
 const Left = ({ sharedUserOutput }) => {
   const navigate = useNavigate();
@@ -26,12 +29,6 @@ const Left = ({ sharedUserOutput }) => {
   <Link to={`/${dataList[currentDataIndex].slug}`}></Link>;
 
   useEffect(() => {
-    if (dataList[currentDataIndex]) {
-      navigate(`/${dataList[currentDataIndex].slug}`);
-    }
-  }, [currentDataIndex, dataList, navigate]);
-
-  useEffect(() => {
     const fetchData = async () => {
       const problems = await getAllProblems();
       setProblemList(problems);
@@ -41,15 +38,21 @@ const Left = ({ sharedUserOutput }) => {
   }, []);
 
   useEffect(() => {
-    if (problemList != null) {
-      if (
-        sharedUserOutput.trim().toLowerCase() ===
-        problemList[currentDataIndex].resoult.trim().toLowerCase()
-      ) {
-        updateUserDocumentProblemList(user.uid, problemList[currentDataIndex]);
-      }
+    if (dataList[currentDataIndex]) {
+      navigate(`/${dataList[currentDataIndex].slug}`);
     }
-  }, [sharedUserOutput, problemList]);
+    console.log(currentDataIndex);
+    console.log(dataList[currentDataIndex].title);
+    if (problemList) {
+      console.log(problemList[currentDataIndex].id);
+      console.log("input", sharedUserOutput.trim().toLowerCase());
+      console.log(
+        "soluzione: ",
+        problemList[currentDataIndex].resoult.trim().toLowerCase()
+      );
+    }
+
+  }, [currentDataIndex, dataList, navigate]);
 
   const nextProblem = () => {
     setCurrentDataIndex(
@@ -86,19 +89,43 @@ const Left = ({ sharedUserOutput }) => {
           <h1>{data.id}</h1>
           <div dangerouslySetInnerHTML={{ __html: data.text }}></div>
           <h2>OUTPUT RICHIESTO: {data.resoult}</h2>
-          <div className="help_title">
-            SOLUZIONE:<br></br>
-          </div>
-          <div
-            className="suggerimento"
-            dangerouslySetInnerHTML={{ __html: data.solution }}
-          ></div>
+          {userContextData &&
+            userContextData.help_list.includes(
+              problemList[currentDataIndex].id
+            ) && (
+              <div className="help_title">
+                SOLUZIONE:<br></br>
+                <div
+                  className="suggerimento"
+                  dangerouslySetInnerHTML={{ __html: data.solution }}
+                ></div>
+              </div>
+            )}
         </div>
       );
     } else {
       return <h1>Nessun esercizio trovato</h1>;
     }
   };
+
+  useEffect(() => {
+    if (problemList != null) {
+      console.log("input", sharedUserOutput.trim().toLowerCase());
+      console.log(
+        "soluzione: ",
+        problemList[currentDataIndex].resoult.trim().toLowerCase()
+      );
+      if (
+        sharedUserOutput
+          .trim()
+          .toLowerCase()
+          .includes(problemList[currentDataIndex].resoult.trim().toLowerCase())
+      ) {
+        showSuccessToast("complimenti hai risolto il problema!");
+        updateUserDocumentProblemList(user.uid, problemList[currentDataIndex]);
+      }
+    }
+  }, [sharedUserOutput, problemList]);
 
   const switchToStatus = () => {
     setIsProblem(!isProblem);
@@ -110,8 +137,16 @@ const Left = ({ sharedUserOutput }) => {
     );
 
     if (confirmed) {
-      if (userContextData.coin >= 50) alert("pagamento effettuato");
-      else alert("pagamento non effettuato");
+      if (userContextData.coin >= 50) {
+        showSuccessToast(
+          "Operazione effettuata con successo!. Aggiorna la pagina per visualizzare la soluzione"
+        );
+        helpRequest(user.uid, problemList[currentDataIndex]);
+      } else {
+        showErrorToast(
+          "Operazione fallita.\n Assicurarsi di avere sufficienti monete."
+        );
+      }
     }
   };
 

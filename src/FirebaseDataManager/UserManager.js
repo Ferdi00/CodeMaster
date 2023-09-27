@@ -10,7 +10,7 @@ import {
   collection,
   orderBy,
   query,
-  limit
+  limit,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -30,6 +30,7 @@ const createUserDocument = async (inputs, uid) => {
       img: "",
       created_at: new Date(),
       solved_problem: [],
+      help_list: [],
     });
   } catch (error) {
     console.error("error in creating user", error);
@@ -50,6 +51,7 @@ const createUserDocumentWithGoogle = async (newUser) => {
       coin: 0,
       created_at: new Date(),
       solved_problem: [],
+      help_list: [],
     });
   } catch (error) {
     console.error("error in creating user", error);
@@ -67,6 +69,7 @@ const getUserById = async (id) => {
     coin: 0,
     created_at: new Date(),
     solved_problem: [],
+    help_list: [],
   };
 
   if (!id) return;
@@ -83,6 +86,7 @@ const getUserById = async (id) => {
     userInfo.coin = docSnap.data().coin;
     userInfo.created_at = docSnap.data().created_at;
     userInfo.solved_problem = docSnap.data().solved_problem;
+    userInfo.help_list = docSnap.data().help_list;
 
     return userInfo;
   } else {
@@ -111,7 +115,6 @@ const updateUserDocument = async (id, newData) => {
   }
 };
 
-
 const updateUserDocumentProblemList = async (id, newData) => {
   const docRef = doc(firestore, "users", id);
   try {
@@ -127,19 +130,19 @@ const updateUserDocumentProblemList = async (id, newData) => {
 };
 
 const updateUserLevel = async (id, newLevel) => {
-   const docRef = doc(firestore, "users", id);
-   try {
-     await updateDoc(docRef, {
-       level: newLevel,
-     });
-   } catch (error) {
-     console.log(error);
-     return false;
-   }
-}
+  const docRef = doc(firestore, "users", id);
+  try {
+    await updateDoc(docRef, {
+      level: newLevel,
+    });
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 
 const getUserLeaderBoard = async () => {
-   const leaderboardRef = collection(firestore, "users");
+  const leaderboardRef = collection(firestore, "users");
   try {
     const leaderboardQuery = query(
       leaderboardRef,
@@ -149,14 +152,28 @@ const getUserLeaderBoard = async () => {
     const snapshot = await getDocs(leaderboardQuery);
     const leaderboard = snapshot.docs.map((doc) => doc.data());
     return leaderboard;
-
   } catch (error) {
     console.log(error);
     return false;
   }
-}
+};
+
+const helpRequest = async (uid, newData) => {
+  const docRef = doc(firestore, "users", uid);
+  try {
+    await updateDoc(docRef, {
+      coin: increment(-50),
+      help_list: arrayUnion(newData.id),
+    });
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+
+};
 
 export {
+  helpRequest,
   getUserLeaderBoard,
   createUserDocument,
   createUserDocumentWithGoogle,

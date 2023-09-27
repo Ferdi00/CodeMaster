@@ -16,6 +16,7 @@
   padding: 10px;
   font-size: 100%;
   overflow: auto;
+   overflow-x: hidden;
 }
 
 .text h1 {
@@ -142,7 +143,6 @@ pre {
 
 .help_title{
   margin-top: 3rem;
-color: #c52a2a;
 font-size:25px;
 font-weight: bold;
 }
